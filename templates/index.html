@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard tốc độ xe</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="left">
+          <img src="/static/car.svg" alt="logo" class="logo" />
+          <div class="title">
+            <div class="main">Dashboard tốc độ xe</div>
+            <div class="sub">Realtime vehicle distance & speed monitoring</div>
+          </div>
+        </div>
+        <div class="right">
+          <div id="clock" class="clock">--:--:--</div>
+          <div id="connectionStatus" class="status offline"><i class="fa-solid fa-circle"></i> Offline</div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <aside class="sidebar">
+          <div class="controls card glass">
+            <div class="control-row">
+              <button id="startSimBtn" class="btn primary"><i class="fa-solid fa-play"></i> Start Simulation</button>
+              <button id="stopSimBtn" class="btn ghost"><i class="fa-solid fa-stop"></i> Stop</button>
+            </div>
+            <div class="control-row small">
+              <button id="reloadBtn" class="btn light"><i class="fa-solid fa-sync"></i> Refresh</button>
+            </div>
+          </div>
+
+          <div class="cards">
+            <!-- moved metric cards to top of content for better visibility -->
+          </div>
+
+          <div class="system-bar card glass">
+            <div class="sys-left">System: <strong id="systemStatus">OK</strong></div>
+            <div class="sys-right">Version: <span id="appVersion">1.0.0</span></div>
+          </div>
+        </aside>
+
+        <section class="content">
+          <!-- Metrics row: moved above chart for immediate visibility -->
+          <div class="metrics-row">
+            <div class="card metric card-speed glass">
+              <div class="icon"><i class="fa-solid fa-tachometer-alt"></i></div>
+              <div class="meta">Tốc độ</div>
+              <div id="speedValue" class="big">-- <span class="unit">m/s</span></div>
+              <div class="foot">Smoothed & animated</div>
+            </div>
+
+            <div class="card metric card-avg glass">
+              <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="meta">Tốc độ trung bình</div>
+              <div id="avgSpeedValue" class="big">-- <span class="unit">m/s</span></div>
+              <div class="foot">Tính từ lịch sử</div>
+            </div>
+
+            <div class="card metric card-max glass">
+              <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+              <div class="meta">Tốc độ cao nhất</div>
+              <div id="maxSpeedValue" class="big">-- <span class="unit">m/s</span></div>
+              <div class="foot">Tính từ lịch sử</div>
+            </div>
+
+            <div class="card metric card-direction glass">
+              <div class="icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+              <div class="meta">Hướng di chuyển</div>
+              <div id="directionValue" class="big">--</div>
+              <div class="foot">Approaching / Receding</div>
+            </div>
+
+            <div class="card metric card-time glass">
+              <div class="icon"><i class="fa-solid fa-clock"></i></div>
+              <div class="meta">Lần cập nhật cuối</div>
+              <div id="lastUpdateValue" class="big">--</div>
+              <div class="foot">Timestamp</div>
+            </div>
+          </div>
+
+          <div class="chart-card card glass">
+            <div class="chart-header">
+              <div class="chart-title">Tốc độ (m/s)</div>
+              <div class="chart-actions">
+                <button id="zoomIn" class="icon-btn" title="Zoom in"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                <button id="zoomOut" class="icon-btn" title="Zoom out"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                <button id="resetZoom" class="icon-btn" title="Reset"><i class="fa-solid fa-arrows-rotate"></i></button>
+              </div>
+            </div>
+            <div class="chart-body">
+              <canvas id="chart" aria-label="speed chart" role="img"></canvas>
+            </div>
+          </div>
+
+          <div class="logs card glass">
+            <div class="logs-header">Activity</div>
+            <div id="toastArea" class="toasts"></div>
+            <div id="skeleton" class="skeleton">
+              <div class="s-line"></div>
+              <div class="s-line short"></div>
+              <div class="s-line"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">Dashboard tốc độ xe — Dashboard v<span id="footerVersion">1.0.0</span></footer>
+
+      <div id="loadingOverlay" class="loading hidden">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
