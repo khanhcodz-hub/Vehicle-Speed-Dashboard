@@ -90,39 +90,7 @@ firtpython
 
 ---
 
-# ⚙️ Installation
 
-Clone repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/Vehicle-Speed-Dashboard.git
-```
-
-Move into project
-
-```bash
-cd Vehicle-Speed-Dashboard
-```
-
-Install dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-Run the application
-
-```bash
-python app.py
-```
-
-Open browser
-
-```
-http://127.0.0.1:5000
-```
-
----
 
 # 🏗 System Architecture
 
